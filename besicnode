@@ -1,0 +1,72 @@
+What is HTTP?
+    Hyper Text Transfer Protocol
+    Communication betweeen web servers & clients
+    HTTP Requests / Responses
+    Includes header & body
+
+    const http = require('http');
+
+    const todos = [
+        {id:1, text:'hello1'}.
+        {id:2, text:'hello2'}.
+        {id:3, text:'hello3'}.
+    ]
+
+    const server = http.createServer((req, res)=>{
+        //res.write("hello");
+        res.setHeader('Content-Type','text/plain');
+        res.setHeader('Content-Type','text/html');
+        res.setHeader('X-Powered-By','node.js');
+        res.setHeader('Сontent-Type','application/json');
+        console.log(req);
+        console.log(req.method);
+        const {headers, url, method} = req;
+        console.log(headers, url, method)
+        res.end();
+        res.end(JSON.stringify({
+            success:true,
+            data:todos
+        }));
+    })
+
+const PORT = 5000;
+server.listen(PORT, ()=> console.log(`server running on port${PORT}`))
+
+
+npm init -y
+npm install -D --save-dev nodemon
+
+package.json file
+"scripts":{
+    "start" : "nodemon server.js"  
+}
+npm start
+
+
+1.xx informational
+
+2.xx success
+200 success
+201 created (created new post success mean)
+204 no Content (delete time use it scucces mean)
+
+3.xx redirection
+304 not modified
+
+4 client errro
+400 bad request
+401 unauthorized
+404 not found
+5.xx server errro
+500 internal server errro
+
+
+200 - OK	Everything worked as expected.
+400 - Bad Request	The request was unacceptable, often due to missing a required parameter.
+401 - Unauthorized	No valid API key provided.
+402 - Request Failed	The parameters were valid but the request failed.
+403 - Forbidden	The API key doesn't have permissions to perform the request.
+404 - Not Found	The requested resource doesn't exist.
+409 - Conflict	The request conflicts with another request (perhaps due to using the same idempotent key).
+429 - Too Many Requests	Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+500, 502, 503, 504 - Server Errors	Something went wrong on Stripe's end. (These are rare.)
